@@ -1,0 +1,2 @@
+include: [assets]
+keep_files: [assets, index.html]
