@@ -6,7 +6,7 @@
 	export let type
 	export let types = {}
 	export let value
-	export let left
+	export let left 
 	export let unit
 	export let auto_release = true
 	export let onClick = () => {}
@@ -74,7 +74,7 @@
 			</span>
 		{/if}
 	</div>
-	{#if !is_admin}
+	{#if !is_admin && left != undefined}
 	<div class="countdown m-0 p-0 has-text-info has-text-weight-bold">
 		{$_("limits.left")}: {left}{unit} 
 	</div>

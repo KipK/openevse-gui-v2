@@ -68,7 +68,7 @@
 					ctval = ctval<0?0:ctval
 					break;
 				default:
-					ctval = 0
+					ctval = undefined
 					break;
 			}
 		}
