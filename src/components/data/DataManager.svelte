@@ -233,6 +233,7 @@
 	async function set_ipaddress(ip) {
 		if (ip != ipaddress) {
 			if (ip && ip != "192.168.4.1" && ipaddress) {
+				console.log("received ip")
 				uistates_store.resetAlertBox()
 				$uistates_store.alertbox.visible = true
 				$uistates_store.alertbox.title = $_("notification")
