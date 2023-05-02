@@ -1,4 +1,5 @@
 <script>
+	import Checkbox from "./../../ui/Checkbox.svelte";
 	import { _ } 		      from 'svelte-i18n'
 	import Borders 			  from "./../../ui/Borders.svelte";
 	import { uistates_store } from "./../../../lib/stores/uistates.js";
@@ -19,6 +20,7 @@
 	let but_scan_state
 	let button_inst
 	let button2_inst
+	let auto_enable = false
 
 	let formdata
 
@@ -26,6 +28,7 @@
 	onMount(() => {
 		updateTags($config_store.rfid_storage)
 		updateFormData()
+		auto_enable = $config_store.rfid_auto_enable
 		mounted = true
 	})
 	$: $config_store.rfid_storage, resetStates()
@@ -34,7 +37,8 @@
 
 	let updateFormData = () => {
 		formdata = {
-			rfid_enabled: {val: $config_store.rfid_enabled, state: ""}
+			rfid_enabled: {val: $config_store.rfid_enabled, state: ""},
+			rfid_auto_enable: {val: $config_store.rfid_auto_enable, state: ""}
 		}	
 	}
 
@@ -57,6 +61,17 @@
 					return true
 		} else {
 			formdata.rfid_enabled.state = "error"
+			return false
+		}
+	}
+
+	async function setAutoEnable(val) {
+		formdata.rfid_auto_enable.state = "loading"
+		if (await serialQueue.add(() => config_store.saveParam("rfid_auto_enable", formdata.rfid_auto_enable.val))) {
+			formdata.rfid_auto_enable.state = "ok"
+					return true
+		} else {
+			formdata.rfid_auto_enable.state = "error"
 			return false
 		}
 	}
@@ -130,10 +145,16 @@
 			<div class="enable">
 				<Switch name="rfidswitch" label={formdata.rfid_enabled.val?$_("enabled"):$_("disabled")} bind:checked={formdata.rfid_enabled.val} disabled={formdata.rfid_enabled.state=="loading"} onChange={toggleRFID}/>
 			</div>
-			
 		</Borders>
 	</div>
-
+	<div>
+		<Checkbox
+			bind:checked={$config_store.rfid_auto_enable}	
+			label="Enable charge when authenticated"
+			onChange={setAutoEnable}
+			bold={true}
+		/>
+	</div>
 	{#if formdata.rfid_enabled.val}
 	<div class="columns is-centered m-0 p-0">
 		<div class="column is-two-thirds m-0 pb-1">
