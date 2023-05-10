@@ -32,7 +32,7 @@
 			desc: "No waste of produced energy. Slowly decrease charge rate, using grid to compensate, but increase faster when energy is going back.",
 			id: 0,
 			divert_attack_smoothing_time: 20,
-			divert_decay_smoothing_time: 300,
+			divert_decay_smoothing_time: 200,
 			divert_min_charge_time: 600
 		},
 		{
@@ -47,7 +47,7 @@
 			name: "Custom",
 			id: 2,
 			divert_attack_smoothing_time: 20,
-			divert_decay_smoothing_time: 300,
+			divert_decay_smoothing_time: 200,
 			divert_min_charge_time: 600
 		}
 	]
@@ -69,9 +69,7 @@
 		formdata.divert_type.val					= $config_store.divert_type != -1 ? $config_store.divert_type : 0
 		formdata.charge_mode.val					= $config_store.charge_mode
 		formdata.mqtt_solar.val						= $config_store.mqtt_solar
-		formdata.mqtt_solar.req 					= $uistates_store.divert_type?false:true
 		formdata.mqtt_grid_ie.val					= $config_store.mqtt_grid_ie
-		formdata.mqtt_grid_ie.req 					= $uistates_store.divert_type?true:false
 		formdata.divert_PV_ratio.val				= $config_store.divert_PV_ratio
 		formdata.divert_attack_smoothing_time.val	= $config_store.divert_attack_smoothing_time
 		formdata.divert_decay_smoothing_time.val	= $config_store.divert_decay_smoothing_time
